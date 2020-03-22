@@ -7,3 +7,4 @@ https://php.net/install.windows
 
 shortcut
 https://php.net/nameofafunction,methodetc here
+html.spec.whatwg.org/multipage - html valid standards
