@@ -1,0 +1,9 @@
+DOCUMENTATION SOURCES
+
+https://php.net/manual
+https://php.net/phpinfo
+https://php.net/install
+https://php.net/install.windows
+
+shortcut
+https://php.net/nameofafunction,methodetc here
