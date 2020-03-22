@@ -86,9 +86,21 @@ User name: <input type="text" name="name" value="<?php
 ?>"><br>
 Password: <input type="password" name="password"><br>
 Gender: 
-    <input type="radio" name="gender" value="f"> Female
-    <input type="radio" name="gender" value="m"> Male
-    <input type="radio" name="gender" value="o"> Other <br />
+    <input type="radio" name="gender" value="f"<?php 
+        if($gender === 'f'){
+            echo ' checked';
+        }
+    ?>> Female
+    <input type="radio" name="gender" value="m"<?php 
+        if($gender === 'm'){
+            echo ' checked';
+        }
+    ?>> Male
+    <input type="radio" name="gender" value="o"<?php 
+        if($gender === 'o'){
+            echo ' checked';
+        }
+    ?>> Other <br />
 Favorite color:
 <select name="color">
     <option value="">Please select</option>
@@ -105,6 +117,10 @@ Languages spoken:
 Comments: <textarea name="comments"><?php 
     echo htmlspecialchars($comments, ENT_QUOTES);
 ?></textarea><br>
-<input type="checkbox" name="tc" value="ok">I accept the T&amp;C<br>
+<input type="checkbox" name="tc" value="ok"<?php 
+    if($tc === 'ok'){
+        echo 'checked';
+    }
+?>>I accept the T&amp;C<br>
 <input type="submit" name="submit" value="Register">
 </form>
