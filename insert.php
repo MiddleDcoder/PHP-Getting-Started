@@ -40,6 +40,7 @@ if(isset($_POST['submit'])) {
         $color = $_POST['color'];
     };
     if($ok) {
+        $hash = password_hash($password, PASSWORD_DEFAULT); //securing password
         // add database code here
         $db = new mysqli( //connecting db
             // 'localhost', //database host
@@ -51,10 +52,12 @@ if(isset($_POST['submit'])) {
             MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);
         $sql = sprintf(
             //inserting the data
-            "INSERT INTO users (name, gender, color) VALUES (
-                '%s','%s','%s')",
+            "INSERT INTO users (name, gender, color, hash) VALUES (
+                '%s','%s','%s', '%s')",
             $db->real_escape_string($name),
-            $db->real_escape_string($gender),$db->real_escape_string($color));
+            $db->real_escape_string($gender),
+            $db->real_escape_string($color),
+            $db->real_escape_string($hash));
         $db->query($sql); //send to database
         // other method for avoid sql injection
         // $stmt = $db->prepare(
