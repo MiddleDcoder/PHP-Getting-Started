@@ -9,7 +9,6 @@
 // // now this practice will not output the code type in search form but will convert into html entities instead <i>Hello World!</i> will now not count as html 
 // }
 $name = '';
-$password = '';
 $gender = '';
 $color = '';
 
@@ -22,11 +21,6 @@ if(isset($_POST['submit'])) {
     }else {
         $name = $_POST['name']; // do not write with this practice start with isset so that it will check and no problem if no value in the form
     };
-    if(!isset($_POST['password']) || $_POST['password'] === ''){
-        $ok = false;
-    }else{
-        $password = $_POST['password'];
-    };
     if(!isset($_POST['gender']) || $_POST['gender'] === ''){
         $ok = false;
     }else{
@@ -37,23 +31,31 @@ if(isset($_POST['submit'])) {
     }else{
         $color = $_POST['color'];
     };
-
     if($ok) {
+        // add database code here
+        $db = new mysqli( //connecting db
+            'localhost', //database host
+            'root', //database user
+            '', //database password
+            'php'); //database name
+        $sql = sprintf(
+            //inserting the data
+            "INSERT INTO users (name, gender, color) VALUES (
+                '%s','%s','%s')",
+            $db->real_escape_string($name),
+            $db->real_escape_string($gender),$db->real_escape_string($color));
+        $db->query($sql); //send to database
+        // other method for avoid sql injection
+        // $stmt = $db->prepare(
+        //     "INSERT INTO table (name, gender, color) VALUES (?, ?, ?)");
+        // $stmt->bind_param('ss', $name, $gender, $color);
+        // $stmt->execute(); //this is the other way to insert data without sql injection
+                echo '<p>User added.</p>';
+        $db->close(); //close connection
 
-    printf('User name: %s
-        <br>Password: %s
-        <br>Gender: %s
-        <br>Color: %s
-        <br>Language(s): %s
-        <br>Comments: %s
-        <br>T&amp;C: %s',
-        htmlspecialchars($name, ENT_QUOTES),
-        htmlspecialchars($password, ENT_QUOTES),
-        htmlspecialchars($gender, ENT_QUOTES),
-        htmlspecialchars($color, ENT_QUOTES),
     }
+} 
 
-    }
 ?>
 <form 
 action="" 
@@ -63,7 +65,6 @@ method="post">
 User name: <input type="text" name="name" value="<?php
     echo htmlspecialchars($name, ENT_QUOTES);
 ?>"><br>
-Password: <input type="password" name="password"><br>
 Gender: 
     <input type="radio" name="gender" value="f"<?php 
         if($gender === 'f'){
