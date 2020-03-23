@@ -8,12 +8,12 @@
 //     echo htmlspecialchars($_POST['searchterm'], ENT_QUOTES); 
 // // now this practice will not output the code type in search form but will convert into html entities instead <i>Hello World!</i> will now not count as html 
 // }
-require 'config.inc.php'; //including php files
+
 
 $name = '';
 $gender = '';
 $color = '';
-$password = '';
+
 
 
 if(isset($_POST['submit'])) {
@@ -23,11 +23,6 @@ if(isset($_POST['submit'])) {
         $ok = false;
     }else {
         $name = $_POST['name']; // do not write with this practice start with isset so that it will check and no problem if no value in the form
-    };
-    if(!isset($_POST['password']) || $_POST['password'] === ''){
-        $ok = false;
-    }else{
-        $password = $_POST['password'];
     };
     if(!isset($_POST['gender']) || $_POST['gender'] === ''){
         $ok = false;
@@ -63,76 +58,53 @@ if(isset($_POST['submit'])) {
         // $stmt->execute(); //this is the other way to insert data without sql injection
                 echo '<p>User added.</p>';
         $db->close(); //close connection
+
     }
 } 
 
-    readfile('header.tmpl.html'); //including html files
 ?>
-
-<form
-  action=""
-  method="post">
-  <div class="form-group">
-  <label for="name">User name</label>
-  <input type="text" class="form-control" name="name" id="name" value="<?php
+<form 
+action="" 
+method="post"> 
+<!-- action=""  where to send the form data-->
+<!-- method=""  how to send the form data-->
+User name: <input type="text" name="name" value="<?php
     echo htmlspecialchars($name, ENT_QUOTES);
-  ?>">
-  </div>
-  <div class="form-group">
-  <label for="password">Password</label>
-  <input type="password" class="form-control" name="password" id="password">
-  </div>
-  <div class="form-group">
-  <div><label>Gender</label></div>
-  <div class="form-check form-check-inline"> 
-    <input type="radio" class="form-check-input" name="gender" id="gender-f" value="f"<?php
-      if ($gender === 'f') {
-        echo ' checked';
-      }
-    ?>>
-    <label class="form-check-label" for="gender-f">female</label>
-  </div>
-  <div class="form-check form-check-inline"> 
-    <input type="radio" class="form-check-input" name="gender" id="gender-m" value="m"<?php
-      if ($gender === 'm') {
-        echo ' checked';
-      }
-    ?>>
-    <label class="form-check-label" for="gender-m">male</label>
-  </div>
-  <div class="form-check form-check-inline"> 
-    <input type="radio" class="form-check-input" name="gender" id="gender-o" value="o"<?php
-      if ($gender === 'o') {
-        echo ' checked';
-      }
-    ?>>
-    <label class="form-check-label" for="gender-o">other</label>
-  </div>
-  </div>
-  <div class="form-group">
-  <label for="color">Favorite color</label> 
-    <select class="form-control" name="color" id="color">
-      <option value="">Please select</option>
-      <option value="#f00"<?php
-        if ($color === '#f00') {
-          echo ' selected';
+?>"><br>
+Gender: 
+    <input type="radio" name="gender" value="f"<?php 
+        if($gender === 'f'){
+            echo ' checked';
         }
-      ?>>red</option>
-      <option value="#0f0"<?php
-        if ($color === '#0f0') {
-          echo ' selected';
+    ?>> Female
+    <input type="radio" name="gender" value="m"<?php 
+        if($gender === 'm'){
+            echo ' checked';
         }
-      ?>>green</option>
-      <option value="#00f"<?php
-        if ($color === '#00f') {
-          echo ' selected';
+    ?>> Male
+    <input type="radio" name="gender" value="o"<?php 
+        if($gender === 'o'){
+            echo ' checked';
         }
-      ?>>blue</option>
-    </select>
-  </div>
-  <input type="submit" name="submit" class="btn btn-primary" value="Register">
+    ?>> Other <br />
+Favorite color:
+<select name="color">
+    <option value="">Please select</option>
+    <option value="#f00"<?php
+        if($color === '#f00'){
+            echo ' selected';
+        }
+    ?>>Red</option>
+    <option value="#0f0"<?php
+        if($color === '#0f0'){
+            echo ' selected';
+        }
+    ?>>Green</option>
+    <option value="#00f"<?php
+        if($color === '#00f'){
+            echo ' selected';
+        }
+    ?>>Blue</option>
+</select> <br />
+<input type="submit" name="submit" value="Register">
 </form>
-
-<?php
-    readfile('footer.tmpl.html');
-?>
