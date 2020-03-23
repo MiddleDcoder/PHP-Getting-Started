@@ -1,11 +1,30 @@
 <?php
 
+require 'config.inc.php';
+
 $message = '';
 
 if (isset($_POST['name']) && isset($_POST['password'])) {
     $db = new mysqli(
       MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);
+      $sql = sprintf("SELECT hash FROM users WHERE name='%s'",
+      $db->real_escape_string($_POST['name']));
+      $result = $db->query($sql);
 
+      //or we can also use foreach()
+      //fetch_object() - function returns the current row of a result-set, as an object
+      $row = $result->fetch_object();
+      
+      if ($row != null) {
+        $hash = $row->hash;
+          if(password_verify($_POST['password'], $hash)){
+            $message = 'Login successful.';
+          }else{
+            $message = 'Login failed.';
+          }
+      }else{
+        $message = "User Doesn't exist.";
+      }
     
     $db->close();
 }
