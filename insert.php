@@ -8,9 +8,12 @@
 //     echo htmlspecialchars($_POST['searchterm'], ENT_QUOTES); 
 // // now this practice will not output the code type in search form but will convert into html entities instead <i>Hello World!</i> will now not count as html 
 // }
+require 'config.inc.php';
+
 $name = '';
 $gender = '';
 $color = '';
+$password = '';
 
 
 if(isset($_POST['submit'])) {
@@ -20,6 +23,11 @@ if(isset($_POST['submit'])) {
         $ok = false;
     }else {
         $name = $_POST['name']; // do not write with this practice start with isset so that it will check and no problem if no value in the form
+    };
+    if(!isset($_POST['password']) || $_POST['password'] === ''){
+        $ok = false;
+    }else{
+        $password = $_POST['password'];
     };
     if(!isset($_POST['gender']) || $_POST['gender'] === ''){
         $ok = false;
@@ -34,10 +42,13 @@ if(isset($_POST['submit'])) {
     if($ok) {
         // add database code here
         $db = new mysqli( //connecting db
-            'localhost', //database host
-            'root', //database user
-            '', //database password
-            'php'); //database name
+            // 'localhost', //database host
+            // 'root', //database user
+            // '', //database password
+            // 'php'); //database name
+
+            //Use Constant From the config.inc.php
+            MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);
         $sql = sprintf(
             //inserting the data
             "INSERT INTO users (name, gender, color) VALUES (
