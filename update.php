@@ -1,13 +1,12 @@
 <?php
-// if(isset($_POST['searchterm'])) {
-//     //isset() - for checking
-//     //means isset will return true if there is value 
-//     //it means  $_POST['searchterm'] there is something in that key searchterm
-//     // if there is something insecure !!!!!!
-//     // echo $_POST['searchterm'];
-//     echo htmlspecialchars($_POST['searchterm'], ENT_QUOTES); 
-// // now this practice will not output the code type in search form but will convert into html entities instead <i>Hello World!</i> will now not count as html 
-// }
+//update.php?id=2
+if(isset($_GET['id']) && ctype_digit($_GET['id'])) {
+    $id = $_GET['id'];
+}else{
+    header('Location: select.php');
+}
+
+
 $name = '';
 $gender = '';
 $color = '';
@@ -32,28 +31,45 @@ if(isset($_POST['submit'])) {
         $color = $_POST['color'];
     };
     if($ok) {
-        // add database code here
         $db = new mysqli( //connecting db
             'localhost', //database host
             'root', //database user
             '', //database password
             'php'); //database name
-        $sql = sprintf(
+        $sql = sprintf(       
             //inserting the data
-            "INSERT INTO users (name, gender, color) VALUES (
-                '%s','%s','%s')",
+            "UPDATE users SET name='%s', gender='%s', color='%s'
+            WHERE id=%s",     
             $db->real_escape_string($name),
-            $db->real_escape_string($gender),$db->real_escape_string($color));
+            $db->real_escape_string($gender),
+            $db->real_escape_string($color),
+            $id);
         $db->query($sql); //send to database
         // other method for avoid sql injection
         // $stmt = $db->prepare(
         //     "INSERT INTO table (name, gender, color) VALUES (?, ?, ?)");
         // $stmt->bind_param('ss', $name, $gender, $color);
         // $stmt->execute(); //this is the other way to insert data without sql injection
-                echo '<p>User added.</p>';
+                echo '<p>User updated.</p>';
         $db->close(); //close connection
 
     }
+} else {
+            // add database code here
+            $db = new mysqli( //connecting db
+                'localhost', //database host
+                'root', //database user
+                '', //database password
+                'php'); //database name
+            $sql = "SELECT * FROM users WHERE id=$id";
+            $result = $db->query($sql);
+            foreach($result as $row){
+                $name = $row['name'];
+                $gender = $row['gender'];
+                $color = $row['color'];
+            }
+            $db->close();       
+
 } 
 
 ?>
