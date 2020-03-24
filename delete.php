@@ -1,4 +1,6 @@
 <?php
+    require 'auth.inc.php';
+
 //delete.php?id=2
     if(isset($_GET['id']) && ctype_digit($_GET['id'])) {
         $id = $_GET['id'];
@@ -16,4 +18,4 @@
     $db->query($sql);
     echo '<p>User deleted.</p>'; 
     $db->close();   
-    ?>
+    ?>  

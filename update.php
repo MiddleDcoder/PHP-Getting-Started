@@ -1,4 +1,6 @@
 <?php
+require 'auth.inc.php';
+
 //update.php?id=2
 if(isset($_GET['id']) && ctype_digit($_GET['id'])) {
     $id = $_GET['id'];
