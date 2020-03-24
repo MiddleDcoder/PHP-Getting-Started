@@ -9,6 +9,10 @@ if(isset($_SESSION['isAdmin'])){
     unset($_SESSION['isAdmin']); //to delete a variable or entry
 }
 
+readfile('header.tmpl.html');
+
 echo 'User logged out.';
+
+readfile('footer.tmpl.html');
 
 ?>

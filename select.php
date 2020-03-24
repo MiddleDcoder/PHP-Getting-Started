@@ -1,13 +1,13 @@
+<?php
+  readfile('header.tmpl.html');
+?>
 <ul>
 <?php 
+  require 'config.inc.php';
 
-
-    $db = new mysqli(
-        'localhost',
-        'root',
-        '',
-        'php');
-     $sql = 'SELECT * FROM users';
+  $db = new mysqli(
+    MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);
+   $sql = 'SELECT * FROM users';
      $result = $db->query($sql);
      
      foreach($result as $row){
@@ -24,6 +24,8 @@
      }
 
      $db->close();
-
 ?>
-</ul>   
+</ul>
+<?php
+  readfile('footer.tmpl.html');
+?>   

@@ -10,6 +10,8 @@
 // }
 require 'config.inc.php'; //including php files
 
+readfile('header.tmpl.html'); //including html files
+
 $name = '';
 $gender = '';
 $color = '';
@@ -69,7 +71,7 @@ if(isset($_POST['submit'])) {
     }
 } 
 
-    readfile('header.tmpl.html'); //including html files
+  
 ?>
 
 <form

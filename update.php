@@ -1,5 +1,5 @@
 <?php
-require 'auth.inc.php';
+  require 'config.inc.php';
 
 //update.php?id=2
 if(isset($_GET['id']) && ctype_digit($_GET['id'])) {
@@ -8,6 +8,7 @@ if(isset($_GET['id']) && ctype_digit($_GET['id'])) {
     header('Location: select.php');
 }
 
+readfile('header.tmpl.html');
 
 $name = '';
 $gender = '';
@@ -33,11 +34,13 @@ if(isset($_POST['submit'])) {
         $color = $_POST['color'];
     };
     if($ok) {
-        $db = new mysqli( //connecting db
-            'localhost', //database host
-            'root', //database user
-            '', //database password
-            'php'); //database name
+        // $db = new mysqli( //connecting db
+        //     'localhost', //database host
+        //     'root', //database user
+        //     '', //database password
+        //     'php'); //database name
+        $db = new mysqli(
+            MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);    
         $sql = sprintf(       
             //inserting the data
             "UPDATE users SET name='%s', gender='%s', color='%s'
@@ -71,7 +74,6 @@ if(isset($_POST['submit'])) {
                 $color = $row['color'];
             }
             $db->close();       
-
 } 
 
 ?>
@@ -120,3 +122,6 @@ Favorite color:
 </select> <br />
 <input type="submit" name="submit" value="Register">
 </form>
+<?php
+  readfile('footer.tmpl.html');
+?>
